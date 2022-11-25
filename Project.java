@@ -1,0 +1,54 @@
+package application;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.StackPane;
+import java.util.ArrayList;
+
+public class Project extends Application {
+  private TabPane tabPane;
+  private SearchPane SearchPane;
+  private ReviewPane reviewPane;
+  //private InformationPane infoPane;
+  private ArrayList<Restaurant> RestaurantList;
+  private DatabaseController dbc;
+
+  public void start(Stage stage) {
+    StackPane root = new StackPane();
+
+    // RestaurantList to be used in both SearchPane & reviewPane
+    RestaurantList = new ArrayList<Restaurant>();
+    dbc = new DatabaseController();
+    
+    //infoPane = new InformationPane(dbc);
+    reviewPane = new ReviewPane(RestaurantList, dbc);
+    SearchPane = new SearchPane(RestaurantList, reviewPane, dbc);
+
+    tabPane = new TabPane();
+
+    Tab tab1 = new Tab();
+    tab1.setText("Restaurant Creation");
+    tab1.setContent(SearchPane);
+
+    Tab tab2 = new Tab();
+    tab2.setText("Restaurant Review");
+    tab2.setContent(reviewPane);
+
+    tabPane.getSelectionModel().select(0);
+    tabPane.getTabs().addAll(tab1, tab2);
+
+    root.getChildren().add(tabPane);
+
+    Scene scene = new Scene(root, 700, 400);
+    stage.setTitle("Restaurant Review Apps");
+    stage.setScene(scene);
+    stage.show();
+  }
+
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
