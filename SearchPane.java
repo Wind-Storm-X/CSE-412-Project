@@ -40,16 +40,16 @@ public class SearchPane extends HBox {
     foodType = new Label("Food Type");
     rating = new Label("Rating greater than");
     cost = new Label("Cost lower than");
-    number = new Label("Phone Number");
     foodName = new Label("Food Name");
+    number = new Label("Phone Number");
 
     restaurantNameField = new TextField();
     addressField = new TextField();
     foodTypeField = new TextField();
     ratingField = new TextField();
     costField = new TextField();
-    numberField = new TextField();
     foodNameField = new TextField();
+    numberField = new TextField();
 
     btn = new Button("Search a Restaurant");
 
@@ -75,10 +75,10 @@ public class SearchPane extends HBox {
     leftPane.add(ratingField, 1, 4);
     leftPane.add(cost, 0, 5);
     leftPane.add(costField, 1, 5);
-    leftPane.add(number, 0, 6);
-    leftPane.add(numberField, 1, 6);
-    leftPane.add(foodName, 0, 7);
-    leftPane.add(foodNameField, 1, 7);
+    leftPane.add(foodName, 0, 6);
+    leftPane.add(foodNameField, 1, 6);
+    leftPane.add(number, 0, 7);
+    leftPane.add(numberField, 1, 7);
     leftPane.add(btnPane, 0, 8, 2, 1);
 
     //set up the right half of the pane
