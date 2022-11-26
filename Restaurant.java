@@ -6,25 +6,27 @@ import java.util.ArrayList;
 public class Restaurant {
   private String RestaurantID;
   private String RestaurantName;
-  private ArrayList<String> FoodType;
   private String Address;
+  private double CustomerRating;
+  private double AverageCost;
   private Review bookReview;
   private ArrayList<Menu> MenuList;
-  //rating and average cost
+  private String CurrentUser;
 
   // Constructor to initialize all member variables
   public Restaurant() {
-	RestaurantID = "?";
-    RestaurantName = "?";
-    FoodType = new ArrayList<String>();
-    Address = "";
-    bookReview = new Review();
-    MenuList = new ArrayList<Menu>();
+	this.RestaurantID = "?";
+    this.RestaurantName = "?";
+    this.Address = "";
+    this.CustomerRating = 0;
+    this.bookReview = new Review();
+    this.MenuList = new ArrayList<Menu>();
+    this.CurrentUser = "";
   }
-
+  
   // Accessor methods
   public String getRestaurantID() {
-	  return RestaurantID;
+	return RestaurantID;
   }
   
   public String getRestaurantName() {
@@ -34,9 +36,13 @@ public class Restaurant {
   public String getAddress() {
     return Address;
   }
-
-  public String getFoodType() {
-    return FoodType.get(0);
+  
+  public double getCustomerRating() {
+	return this.CustomerRating;
+  }
+  
+  public double getAverageCost() {
+	return this.AverageCost;
   }
 
   public Review getReview() {
@@ -45,6 +51,10 @@ public class Restaurant {
   
   public ArrayList<Menu> getMenuList() {
 	  return this.MenuList;
+  }
+  
+  public String getCurrentUser() {
+	  return this.CurrentUser;
   }
 
   // Mutator methods
@@ -59,32 +69,47 @@ public class Restaurant {
   public void setAddress(String address) {
     Address = address;
   }
-
-  public void setFoodType(String foodType) {
-	FoodType.add("None");
-	FoodType.add("Test");
-    FoodType.set(0, "None");
-    FoodType.set(1, "None");
+  
+  public void setCustomerRating(double cr) {
+	this.CustomerRating = cr;
+  }
+  
+  public void setAverageCost(double ac) {
+	this.AverageCost = ac;
   }
   
   public void setMenuList(ArrayList<Menu> menuList) {
-	  this.MenuList = menuList;
+	this.MenuList = menuList;
+  }
+  
+  public void setCurrentUser(String phoneNumber) {
+	  this.CurrentUser = phoneNumber;
+	  System.out.println("Phone number set: " + phoneNumber);
   }
   
   public void addMenu(Menu m) {
-	  this.MenuList.add(m);
+	this.MenuList.add(m);
   }
 
   public void addRating(double rate) {
-    bookReview.updateRating(rate);
+	System.out.println("Adding rating from user: " + this.CurrentUser);
+	this.bookReview.setPhoneNumber(this.CurrentUser);
+	this.bookReview.setReviewRestaurant(this.RestaurantID);
+    this.bookReview.updateRating(rate);
+    this.CustomerRating = this.bookReview.getAverage();
   }
 
   // toString() method returns a string containg the information on the Restaurant
   public String toString() {
-    String result = "\nRestaurant Name:\t\t" + RestaurantName + "\nRestaurant Address:\t\t" + Address + "\nFood Type:\t\t" + FoodType
-        + "\n" + bookReview.toString() + "\n\n";
+    String result = "\nRestaurant Name:\t\t" + this.RestaurantName + "\nRestaurant Address:\t\t" + this.Address
+    		+ "\nCustomer Rating:\t\t" + this.CustomerRating + "\nAverage Cost:\t\t" + this.AverageCost
+    		+ "\n";
     
-    result = "\nRestaurant Name:\t\t" + RestaurantName + "\nRestaurant Address:\t\t" + Address + "\n" + MenuList.toString() + "\n\n";
+    for (int i = 0; i < this.MenuList.size(); i++) {
+    	result += this.MenuList.get(i).toString();
+    }
+    
+    result += "\n-------------------------\n";
     
     return result;
   }
