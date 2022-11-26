@@ -52,7 +52,10 @@ public class Menu {
 	}
 	
 	public String toString() {
-		String menuStr = "\n" + this.FoodType + ":\n" + this.FoodList;
+		String menuStr = "\n" + this.FoodType + ":\n";
+		for (int i = 0; i <  this.FoodList.size(); i++) {
+			menuStr += this.FoodList.get(i).toString();
+		}
 		return menuStr;
 	}
 }
