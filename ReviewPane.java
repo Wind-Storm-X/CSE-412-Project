@@ -1,13 +1,13 @@
 package application;
 
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+//import javafx.scene.Scene;
+//import javafx.stage.Stage;
 import javafx.scene.control.ListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.control.SelectionMode;
+//import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.geometry.Pos;
+//import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 
 public class ReviewPane extends VBox {
@@ -116,14 +116,21 @@ public class ReviewPane extends VBox {
       // the list view's average rating is updated by adding a additional
       // rating specified by a selected radio button
       RadioButton selectedRadioBtn = (RadioButton) ratingGrp.getSelectedToggle();
+      if (selectedRadioBtn == null) {
+    	  System.out.println("Please select a score!");
+    	  return;
+      }
+      System.out.println("Score selected.");
       double radioBtnVal = Double.parseDouble(selectedRadioBtn.getText().substring(0, 1));
       if (ratingGrp.getSelectedToggle() != null && selectedIndex >= 0) {
         // System.out.println(selectedIndex);
         // System.out.println(radioBtnVal);
-        
+        System.out.println("Ready to add rating.");
         RestaurantList.get(selectedIndex).addRating(radioBtnVal);
         convArrList.set(selectedIndex, RestaurantList.get(selectedIndex));
         selectedIndex = -1;
+      } else {
+    	System.out.println("Unexpected error.");
       }
     }
   } // end of RatingHandler
