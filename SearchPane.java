@@ -3,23 +3,23 @@ package application;
 
 import java.util.ArrayList;
 
-import javafx.scene.control.ListView;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+//import javafx.scene.control.ListView;
+//import javafx.collections.FXCollections;
+//import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 // import javafx.geometry.HPos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+//import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Priority;
+//import javafx.scene.layout.TilePane;
+//import javafx.scene.layout.AnchorPane;
+//import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -32,14 +32,12 @@ public class SearchPane extends HBox {
   Label restaurantName, address, foodType, result;
   TextField restaurantNameField, addressField, foodTypeField;
   
-  //Label label;
-  //TextField entry;
   Label rating, cost, number, foodName;
   TextField ratingField, costField, numberField, foodNameField;
   TextArea RestaurantField;
   
   Button btn;
-  //Button byName, byAddr, byRating, byCost;
+  
   // constructor
   public SearchPane(ArrayList<Restaurant> list, ReviewPane rePane, DatabaseController dbc) {
     this.RestaurantList = list;
@@ -65,16 +63,8 @@ public class SearchPane extends HBox {
     costField = new TextField();
     numberField = new TextField();
     foodNameField = new TextField();
-    
-    //label = new Label("Search a Restaurant:");
 
     btn = new Button("Search a Restaurant");
-    /*
-    byName = new Button("Search by name");
-    byAddr = new Button("Search by address");
-    byRating = new Button("Search by Rating");
-    byCost = new Button("Search by average cost");*/
-    // btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
     // Search a GridPane hold those labels & text fields
     // consider using .setPadding() or setHgap(), setVgap()
@@ -89,11 +79,6 @@ public class SearchPane extends HBox {
     // You might need to Search a sub pane to hold the button
     StackPane btnPane = new StackPane();
     btnPane.getChildren().add(btn);
-    /*
-    btnPane.getChildren().add(byName);
-    btnPane.getChildren().add(byAddr);
-    btnPane.getChildren().add(byRating);
-    btnPane.getChildren().add(byCost);*/
 
     // Set up the layout for the left half of the SearchPane.
     leftPane.add(result, 0, 0, 4, 1);
@@ -112,10 +97,6 @@ public class SearchPane extends HBox {
     leftPane.add(numberField, 1, 6);
     leftPane.add(foodName, 0, 7);
     leftPane.add(foodNameField, 1, 7);
-    //leftPane.add(label, 0, 4);
-    //leftPane.add(entry, 1, 4);
-    //leftPane.add(byName, 0, 5);
-    //leftPane.add(byAddr, 1, 5);
     leftPane.add(btnPane, 0, 8, 2, 1);
 
     // the right half of this pane is simply a TextArea object
@@ -147,7 +128,7 @@ public class SearchPane extends HBox {
     // Override the abstact method handle()
     public void handle(ActionEvent event) {
       String restaurantName;
-      String address, foodType, foodName;
+      String address, foodType, foodName, number;
       double rating;
       double cost;
       //int address, foodType;
@@ -160,6 +141,8 @@ public class SearchPane extends HBox {
 	      restaurantName = restaurantNameField.getText();
 	      address = addressField.getText();
 	      foodType = foodTypeField.getText();
+	      number = numberField.getText();
+	      System.out.println("Current user phone number: " + number);
 	      
 	      if (ratingField.getText().trim().isEmpty()) {
 	    	  rating = -1;
@@ -175,7 +158,7 @@ public class SearchPane extends HBox {
 	      
 	      foodName = foodNameField.getText();
 	      
-	      RestaurantList = dbc.search(restaurantName, address, foodType, rating, cost, foodName);
+	      RestaurantList = dbc.search(restaurantName, address, foodType, rating, cost, foodName, number);
 	      
 	      //address = Integer.parseInt(addressField.getText());
 	      //foodType = Integer.parseInt(foodTypeField.getText());
@@ -191,11 +174,17 @@ public class SearchPane extends HBox {
 	        RestaurantListStr += RestaurantList.get(i).toString();
 	    	reviewPane.updateRestaurantList(RestaurantList.get(i));
 	      }
-	      RestaurantField.setText(RestaurantListStr);
-	
+	      
+	      if (RestaurantListStr.trim().isEmpty()) {
+	    	  result.setText("Restaurant not found");
+	    	  RestaurantField.setText("No Restaurant");
+	      } else {
+	    	  RestaurantField.setText(RestaurantListStr);
+	    	  result.setText("Restaurant found");
+	      }
+	      
 	      //reviewPane.updateRestaurantList(SearchRestaurant);
-	
-	      result.setText("Restaurant added");
+	      
 	
 	  } catch (NumberFormatException e) {
 	      result.setText("Incorrect data format");
