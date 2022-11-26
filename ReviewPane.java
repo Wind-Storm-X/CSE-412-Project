@@ -33,6 +33,7 @@ public class ReviewPane extends VBox {
     this.selectedIndex = -1;
 
     this.ratingGrp = new ToggleGroup();
+    
     this.poor = new RadioButton("1 Poor");
     this.poor.setToggleGroup(ratingGrp);
 
