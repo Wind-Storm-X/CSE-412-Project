@@ -21,7 +21,7 @@ public class Project extends Application {
 
     // RestaurantList to be used in both SearchPane & reviewPane
     RestaurantList = new ArrayList<Restaurant>();
-    dbc = new DatabaseController();
+    dbc = new DatabaseController(RestaurantList);
     
     //infoPane = new InformationPane(dbc);
     reviewPane = new ReviewPane(RestaurantList, dbc);
