@@ -12,9 +12,8 @@ public class Project extends Application {
   private TabPane tabPane;
   private SearchPane SearchPane;
   private ReviewPane reviewPane;
-  //private InformationPane infoPane;
   private ArrayList<Restaurant> RestaurantList;
-  private DatabaseController dbc;
+  public static DatabaseController dbc;
 
   public void start(Stage stage) {
     StackPane root = new StackPane();
@@ -23,7 +22,6 @@ public class Project extends Application {
     RestaurantList = new ArrayList<Restaurant>();
     dbc = new DatabaseController(RestaurantList);
     
-    //infoPane = new InformationPane(dbc);
     reviewPane = new ReviewPane(RestaurantList, dbc);
     SearchPane = new SearchPane(RestaurantList, reviewPane, dbc);
 
