@@ -1,5 +1,7 @@
 package application;
 
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.scene.control.ListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,9 +21,9 @@ import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 
 public class ReviewPane extends VBox {
-  private ArrayList<Movie> movieList;
-  private ListView<Movie> movieListView;
-  private ObservableList<Movie> convArrList;
+  private ArrayList<Restaurant> RestaurantList;
+  private ListView<Restaurant> RestaurantListView;
+  private ObservableList<Restaurant> convArrList;
 
   // declare all other necessary GUI variables here
   RadioButton poor, fair, average, good, excellent;
@@ -30,9 +32,9 @@ public class ReviewPane extends VBox {
   int selectedIndex = -1;
 
   // constructor
-  public ReviewPane(ArrayList<Movie> list) {
+  public ReviewPane(ArrayList<Restaurant> list, DatabaseController dbc) {
     // initialize instance variables
-    this.movieList = list;
+    this.RestaurantList = list;
 
     ratingGrp = new ToggleGroup();//------------------------------
     poor = new RadioButton("1 Poor");
@@ -58,10 +60,10 @@ public class ReviewPane extends VBox {
     submit = new Button("Submit Review");//-----------------------
 
     // set up the layout
-    convArrList = FXCollections.observableArrayList(movieList);
-    movieListView = new ListView<Movie>(convArrList);
+    convArrList = FXCollections.observableArrayList(RestaurantList);
+    RestaurantListView = new ListView<Restaurant>(convArrList);
     
-    VBox listPane = new VBox(movieListView);//-----------------
+    VBox listPane = new VBox(RestaurantListView);//-----------------
     listPane.setMaxSize(700, 270);//---------------------------
 
     HBox reviewPane = new HBox();
@@ -81,28 +83,36 @@ public class ReviewPane extends VBox {
     // Step #3: Register the button with its handler class
     RatingHandler rHandler = new RatingHandler();
     submit.setOnAction(rHandler);
-    movieListView.setOnMouseClicked(new movieListHandler());
+    RestaurantListView.setOnMouseClicked(new RestaurantListHandler());
 
   } // end of constructor
 
-  // This method refresh the ListView whenever there's new movie added in
+  // This method refresh the ListView whenever there's new Restaurant added in
   // CreatePane
   // you will need to update the underline ObservableList object in order for
   // ListView
-  // object to show the updated movie list
+  // object to show the updated Restaurant list
 
-  public void updateMovieList(Movie newMovie) {
-    convArrList.add(newMovie);
+  public void updateRestaurantList(Restaurant newRestaurant) {
+    convArrList.add(newRestaurant);
     System.out.println("done");
-    // ObservableList<Movie> convArrList = FXCollections.observableArrayList(movieList);
-    // movieListView = new ListView<Movie>(convArrList);
+    // ObservableList<Restaurant> convArrList = FXCollections.observableArrayList(RestaurantList);
+    // RestaurantListView = new ListView<Restaurant>(convArrList);
+  }
+  
+  public void clearPane() {
+	  RestaurantListView.getItems().clear();
+  }
+  
+  public void resetRestaurantList() {
+	  RestaurantList.clear();
   }
 
   // Step 2: Create a RatingHandler class
   private class RatingHandler implements EventHandler<ActionEvent> {
     // Override the abstact method handle()
     public void handle(ActionEvent event) {
-      // When "Submit Review" button is pressed and a movie is selected from
+      // When "Submit Review" button is pressed and a Restaurant is selected from
       // the list view's average rating is updated by adding a additional
       // rating specified by a selected radio button
       RadioButton selectedRadioBtn = (RadioButton) ratingGrp.getSelectedToggle();
@@ -111,16 +121,17 @@ public class ReviewPane extends VBox {
         // System.out.println(selectedIndex);
         // System.out.println(radioBtnVal);
         
-        movieList.get(selectedIndex).addRating(radioBtnVal);
-        convArrList.set(selectedIndex, movieList.get(selectedIndex));
+        RestaurantList.get(selectedIndex).addRating(radioBtnVal);
+        convArrList.set(selectedIndex, RestaurantList.get(selectedIndex));
         selectedIndex = -1;
       }
     }
   } // end of RatingHandler
 
-  private class movieListHandler implements EventHandler<MouseEvent> {
+  private class RestaurantListHandler implements EventHandler<MouseEvent> {
     public void handle(MouseEvent e) {
-      selectedIndex = movieListView.getSelectionModel().getSelectedIndex();
+      selectedIndex = RestaurantListView.getSelectionModel().getSelectedIndex();
+      
     }
   }
 } // end of ReviewPane class
