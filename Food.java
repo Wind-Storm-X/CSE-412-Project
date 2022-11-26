@@ -56,7 +56,7 @@ public class Food {
 	}
 	
 	public String toString() {
-		String foodInfo = this.FoodName + ", price: " + this.Price + "\n";
+		String foodInfo = this.FoodName + ", price:  $" + this.Price + "\n";
 		return foodInfo;
 	}
 }
