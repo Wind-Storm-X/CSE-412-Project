@@ -17,8 +17,7 @@ public class Project extends Application {
 
   public void start(Stage stage) {
     StackPane root = new StackPane();
-
-    // RestaurantList to be used in both SearchPane & reviewPane
+    
     RestaurantList = new ArrayList<Restaurant>();
     dbc = new DatabaseController(RestaurantList);
     
@@ -28,7 +27,7 @@ public class Project extends Application {
     tabPane = new TabPane();
 
     Tab tab1 = new Tab();
-    tab1.setText("Restaurant Creation");
+    tab1.setText("Restaurant Search");
     tab1.setContent(SearchPane);
 
     Tab tab2 = new Tab();
@@ -41,7 +40,8 @@ public class Project extends Application {
     root.getChildren().add(tabPane);
 
     Scene scene = new Scene(root, 700, 400);
-    stage.setTitle("Restaurant Review Apps");
+    
+    stage.setTitle("Restaurant Search & Review Apps");
     stage.setScene(scene);
     stage.show();
   }

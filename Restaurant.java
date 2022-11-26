@@ -1,5 +1,6 @@
 package application;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -9,22 +10,22 @@ public class Restaurant {
   private String Address;
   private double CustomerRating;
   private double AverageCost;
-  private Review bookReview;
+  private Review RestaurantReview;
   private ArrayList<Menu> MenuList;
-  private String CurrentUser;
+  private String CurrentUser;	//the user who's doing the search
 
-  // Constructor to initialize all member variables
+  // Constructor
   public Restaurant() {
 	this.RestaurantID = "?";
     this.RestaurantName = "?";
     this.Address = "";
     this.CustomerRating = 0;
-    this.bookReview = new Review();
+    this.RestaurantReview = new Review();
     this.MenuList = new ArrayList<Menu>();
     this.CurrentUser = "";
   }
   
-  // Accessor methods
+  //getters
   public String getRestaurantID() {
 	return RestaurantID;
   }
@@ -46,7 +47,7 @@ public class Restaurant {
   }
 
   public Review getReview() {
-    return bookReview;
+    return RestaurantReview;
   }
   
   public ArrayList<Menu> getMenuList() {
@@ -57,7 +58,7 @@ public class Restaurant {
 	  return this.CurrentUser;
   }
 
-  // Mutator methods
+  //setters
   public void setRestaurantID(String id) {
 	  RestaurantID = id;
   }
@@ -93,16 +94,19 @@ public class Restaurant {
 
   public void addRating(double rate) {
 	System.out.println("Adding rating from user: " + this.CurrentUser);
-	this.bookReview.setPhoneNumber(this.CurrentUser);
-	this.bookReview.setReviewRestaurant(this.RestaurantID);
-    this.bookReview.updateRating(rate);
-    this.CustomerRating = this.bookReview.getAverage();
+	this.RestaurantReview.setPhoneNumber(this.CurrentUser);
+	this.RestaurantReview.setReviewRestaurant(this.RestaurantID);
+    this.RestaurantReview.updateRating(rate);
+    this.CustomerRating = this.RestaurantReview.getAverage();
   }
-
-  // toString() method returns a string containg the information on the Restaurant
+  
   public String toString() {
-    String result = "\nRestaurant Name:\t\t" + this.RestaurantName + "\nRestaurant Address:\t\t" + this.Address
-    		+ "\nCustomer Rating:\t\t" + this.CustomerRating + "\nAverage Cost:\t\t" + this.AverageCost
+	DecimalFormat fmt = new DecimalFormat("0.00");
+    String result = "\nRestaurant Name:\t\t" + this.RestaurantName
+    		+ "\nRestaurant Address:\t\t" + this.Address
+    		+ "\nCustomer Rating:\t\t" + fmt.format(this.CustomerRating)
+    		+ "\nNumber of Reviews:\t\t" + Project.dbc.countRating(this.RestaurantID)
+    		+ "\nAverage Cost:\t\t" + fmt.format(this.AverageCost)
     		+ "\n";
     
     for (int i = 0; i < this.MenuList.size(); i++) {

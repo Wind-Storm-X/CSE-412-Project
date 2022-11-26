@@ -8,6 +8,7 @@ public class Menu {
 	private String FoodType;
 	private ArrayList<Food> FoodList;
 	
+	//constructor
 	public Menu() {
 		this.RestaurantID = "?";
 		this.MenuID = "?";
@@ -15,6 +16,24 @@ public class Menu {
 		this.FoodList = new ArrayList<Food>();
 	}
 	
+	//getters
+	public String getRestaurantID() {
+		return this.RestaurantID;
+	}
+	
+	public String getMenuID() {
+		return this.MenuID;
+	}
+	
+	public String getFoodType() {
+		return this.FoodType;
+	}
+	
+	public ArrayList<Food> getFoodList() {
+		return this.FoodList;
+	}
+	
+	//setters
 	public void setRestaurantID(String rid) {
 		this.RestaurantID = rid;
 	}
@@ -33,22 +52,6 @@ public class Menu {
 	
 	public void addFood(Food f) {
 		this.FoodList.add(f);
-	}
-	
-	public String getRestaurantID() {
-		return this.RestaurantID;
-	}
-	
-	public String getMenuID() {
-		return this.MenuID;
-	}
-	
-	public String getFoodType() {
-		return this.FoodType;
-	}
-	
-	public ArrayList<Food> getFoodList() {
-		return this.FoodList;
 	}
 	
 	public String toString() {
