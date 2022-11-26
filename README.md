@@ -5,6 +5,7 @@ For searching a restaurant:
 2. Users can also search for a restaurant with more than one condition.
 3. Users can search for a restaurant with key words insteatd of the full name of a restaurnt of food.
 4. Users have to enter phone number when searching if they want to rate a restaurant.
+
 For rating a restaurant:
 1. Users have to select a restaurant and a score in order to rate.
 2. If a user rates a restaurant multiple times, the lastest record will be used to calculate the average rating and the old record will be deleted.
