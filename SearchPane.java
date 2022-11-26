@@ -34,8 +34,8 @@ public class SearchPane extends HBox {
   
   //Label label;
   //TextField entry;
-  Label rating, cost, number;
-  TextField ratingField, costField, numberField;
+  Label rating, cost, number, foodName;
+  TextField ratingField, costField, numberField, foodNameField;
   TextArea RestaurantField;
   
   Button btn;
@@ -50,12 +50,13 @@ public class SearchPane extends HBox {
     result = new Label("Phone number is necessary for rating a restaurant!");
     result.setTextFill(Color.RED);
 
-    restaurantName = new Label("Name");
+    restaurantName = new Label("Restaurant Name");
     address = new Label("Address");
     foodType = new Label("Food Type");
     rating = new Label("Rating greater than");
     cost = new Label("Cost lower than");
-    number = new Label("Phone number");
+    number = new Label("Phone Number");
+    foodName = new Label("Food Name");
 
     restaurantNameField = new TextField();
     addressField = new TextField();
@@ -63,6 +64,7 @@ public class SearchPane extends HBox {
     ratingField = new TextField();
     costField = new TextField();
     numberField = new TextField();
+    foodNameField = new TextField();
     
     //label = new Label("Search a Restaurant:");
 
@@ -108,11 +110,13 @@ public class SearchPane extends HBox {
     leftPane.add(costField, 1, 5);
     leftPane.add(number, 0, 6);
     leftPane.add(numberField, 1, 6);
+    leftPane.add(foodName, 0, 7);
+    leftPane.add(foodNameField, 1, 7);
     //leftPane.add(label, 0, 4);
     //leftPane.add(entry, 1, 4);
     //leftPane.add(byName, 0, 5);
     //leftPane.add(byAddr, 1, 5);
-    leftPane.add(btnPane, 0, 7, 2, 1);
+    leftPane.add(btnPane, 0, 8, 2, 1);
 
     // the right half of this pane is simply a TextArea object
     // Note: a ScrollPane will be added to it automatically when there are no
@@ -143,12 +147,16 @@ public class SearchPane extends HBox {
     // Override the abstact method handle()
     public void handle(ActionEvent event) {
       String restaurantName;
-      String address, foodType;
-      int rating, cost;
+      String address, foodType, foodName;
+      double rating;
+      double cost;
       //int address, foodType;
       String RestaurantListStr = "";
       
 	  try {
+		  reviewPane.resetRestaurantList();
+		  reviewPane.clearPane();
+		  
 	      restaurantName = restaurantNameField.getText();
 	      address = addressField.getText();
 	      foodType = foodTypeField.getText();
@@ -156,32 +164,36 @@ public class SearchPane extends HBox {
 	      if (ratingField.getText().trim().isEmpty()) {
 	    	  rating = -1;
 	      } else {
-	    	  rating = Integer.parseInt(ratingField.getText());
+	    	  rating = Double.parseDouble(ratingField.getText());
 	      }
 	      
 	      if (costField.getText().trim().isEmpty()) {
-	    	  cost = -1;
+	    	  cost = Integer.MAX_VALUE;
 	      } else {
-	    	  cost = Integer.parseInt(costField.getText());
+	    	  cost = Double.parseDouble(costField.getText());
 	      }
 	      
-	      dbc.search(restaurantName, address, foodType, rating, cost);
+	      foodName = foodNameField.getText();
+	      
+	      RestaurantList = dbc.search(restaurantName, address, foodType, rating, cost, foodName);
 	      
 	      //address = Integer.parseInt(addressField.getText());
 	      //foodType = Integer.parseInt(foodTypeField.getText());
 	      
+	      /*
 	      Restaurant SearchRestaurant = new Restaurant();
 	      SearchRestaurant.setRestaurantName(restaurantName);
 	      SearchRestaurant.setAddress(address);
 	      SearchRestaurant.setFoodType(foodType);
-	      RestaurantList.add(SearchRestaurant);
+	      RestaurantList.add(SearchRestaurant);*/
 	      
 	      for (int i = 0; i < RestaurantList.size(); i++) {
 	        RestaurantListStr += RestaurantList.get(i).toString();
+	    	reviewPane.updateRestaurantList(RestaurantList.get(i));
 	      }
 	      RestaurantField.setText(RestaurantListStr);
 	
-	      reviewPane.updateRestaurantList(SearchRestaurant);
+	      //reviewPane.updateRestaurantList(SearchRestaurant);
 	
 	      result.setText("Restaurant added");
 	
