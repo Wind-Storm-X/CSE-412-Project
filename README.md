@@ -1,5 +1,4 @@
 # CSE-412-Project
-Manual:
 
 For searching a restaurant:
 1. Users can search for a restaurant by using any of restaurant name, address, food type, average rating, average cost, or food name.
